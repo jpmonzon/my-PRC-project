@@ -23,7 +23,7 @@ Checking out Revision 314a4b0ed6c7b114f50afdc846cd4b79b49b42c2 (refs/remotes/ori
  > git config core.sparsecheckout # timeout=10
  > git checkout -f 314a4b0ed6c7b114f50afdc846cd4b79b49b42c2 # timeout=10
 Commit message: "add Jenkins file"
-First time build. Skipping changelog.
+ > git rev-list --no-walk 314a4b0ed6c7b114f50afdc846cd4b79b49b42c2 # timeout=10
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] withEnv
@@ -46,6 +46,7 @@ Checking out Revision 314a4b0ed6c7b114f50afdc846cd4b79b49b42c2 (refs/remotes/ori
  > git config core.sparsecheckout # timeout=10
  > git checkout -f 314a4b0ed6c7b114f50afdc846cd4b79b49b42c2 # timeout=10
  > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
  > git checkout -b main 314a4b0ed6c7b114f50afdc846cd4b79b49b42c2 # timeout=10
 Commit message: "add Jenkins file"
 [Pipeline] }
@@ -54,7 +55,7 @@ Commit message: "add Jenkins file"
 [Pipeline] { (Install Dependencies)
 [Pipeline] sh
 + npm install
-/var/jenkins_home/workspace/app-pipeline-prc@tmp/durable-39aaa924/script.sh.copy: line 1: npm: not found
+/var/jenkins_home/workspace/app-pipeline-prc@tmp/durable-4ffa9e1f/script.sh.copy: line 1: npm: not found
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] stage
@@ -88,5 +89,3 @@ Pipeline failed.
 [Pipeline] End of Pipeline
 ERROR: script returned exit code 127
 Finished: FAILURE
-
-REST API
