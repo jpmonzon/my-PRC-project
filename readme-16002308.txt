@@ -1,81 +1,47 @@
-ipeline {
+pipeline {
     agent any
+
     stages {
-        stage('Source Code Checkout') {
+        stage('Checkout') {
             steps {
-                script {
-                    checkout([$class: 'GitSCM', branches: [[name: 'master']], userRemoteConfigs: [[url: 'https://github.com/jpmonzon/app-pipeline-prc.git']]])
-                }
+                // Clonar el repositorio desde GitHub
+                git branch: 'main', url: 'https://github.com/jpmonzon/app-pipeline-prc.git'
             }
         }
-        // Otros pasos de la pipeline...
+        stage('Install Dependencies') {
+            steps {
+                // Instalar dependencias de Node.js
+                sh 'npm install'
+            }
+        }
+        stage('Build') {
+            steps {
+                // Construir el proyecto Node.js
+                sh 'npm run build'
+            }
+        }
+        stage('Test') {
+            steps {
+                // Ejecutar pruebas unitarias
+                sh 'npm test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Construir y desplegar la imagen Docker
+                sh '''
+                docker build -t jpmonzon/app-pipeline-prc .
+                docker run -d -p 80:80 jpmonzon/app-pipeline-prc
+                '''
+            }
+        }
     }
-}
-stage('Build') {
-    steps {
-        script {
-            sh 'npm install'
-            sh 'npm build'
+    post {
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
-stage('Build') {
-    steps {
-        script {
-            sh 'pip install -r requirements.txt'
-            sh 'build_commands_if_needed'
-        }
-    }
-}
-stage('Build') {
-    steps {
-        script {
-            sh 'mvn clean install'
-        }
-    }
-}
-stage('Test') {
-    steps {
-        script {
-            sh 'npm test'
-        }
-    }
-}
-stage('Test') {
-    steps {
-        script {
-            sh 'pytest'
-        }
-    }
-}
-stage('Test') {
-    steps {
-        script {
-            sh 'mvn test'
-        }
-    }
-}
-stage('Deploy') {
-    steps {
-        script {
-            sh 'docker stop mi-contenedor || true'
-            sh 'docker rm mi-contenedor || true'
-            sh 'docker build -t mi-aplicacion .'
-            sh 'docker run -d -p 8080:80 --name mi-contenedor mi-aplicacion'
-        }
-    }
-}
-
-
-ERROR: Couldn't find any revision to build. Verify the repository and branch configuration for this job.
-ERROR: Maximum checkout retry attempts reached, aborting
-[Pipeline] }
-[Pipeline] // script
-[Pipeline] }
-[Pipeline] // stage
-[Pipeline] }
-[Pipeline] // node
-[Pipeline] End of Pipeline
-ERROR: Couldn't find any revision to build. Verify the repository and branch configuration for this job.
-Finished: FAILURE
-
