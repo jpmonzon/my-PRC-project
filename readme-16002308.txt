@@ -67,5 +67,15 @@ stage('Deploy') {
 }
 
 
-
+ERROR: Couldn't find any revision to build. Verify the repository and branch configuration for this job.
+ERROR: Maximum checkout retry attempts reached, aborting
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: Couldn't find any revision to build. Verify the repository and branch configuration for this job.
+Finished: FAILURE
 
