@@ -1,4 +1,71 @@
-Hello, GitHUb from Juan Pablo Monzon!
+ipeline {
+    agent any
+    stages {
+        stage('Source Code Checkout') {
+            steps {
+                script {
+                    checkout([$class: 'GitSCM', branches: [[name: 'master']], userRemoteConfigs: [[url: 'https://github.com/jpmonzon/app-pipeline-prc.git']]])
+                }
+            }
+        }
+        // Otros pasos de la pipeline...
+    }
+}
+stage('Build') {
+    steps {
+        script {
+            sh 'npm install'
+            sh 'npm build'
+        }
+    }
+}
+stage('Build') {
+    steps {
+        script {
+            sh 'pip install -r requirements.txt'
+            sh 'build_commands_if_needed'
+        }
+    }
+}
+stage('Build') {
+    steps {
+        script {
+            sh 'mvn clean install'
+        }
+    }
+}
+stage('Test') {
+    steps {
+        script {
+            sh 'npm test'
+        }
+    }
+}
+stage('Test') {
+    steps {
+        script {
+            sh 'pytest'
+        }
+    }
+}
+stage('Test') {
+    steps {
+        script {
+            sh 'mvn test'
+        }
+    }
+}
+stage('Deploy') {
+    steps {
+        script {
+            sh 'docker stop mi-contenedor || true'
+            sh 'docker rm mi-contenedor || true'
+            sh 'docker build -t mi-aplicacion .'
+            sh 'docker run -d -p 8080:80 --name mi-contenedor mi-aplicacion'
+        }
+    }
+}
 
-DevOps Lab01
-Welcome to my project 2024!
+
+
+
